@@ -1,16 +1,14 @@
-import {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Notes from "./components/Notes/Notes";
 import './styles/App.css'
-import MyInput from "./components/UI/input/MyInput";
 import MyButton from "./components/UI/button/MyButton";
-import NoteForm from "./components/NoteForm/NoteForm";
 import Modal from "./components/Modal/Modal";
-import EditNoteForm from "./components/NoteForm/EditNoteForm";
+import NoteForm from "./components/NoteForm/NoteForm";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [modal, setModal] = useState(false);
-  const [edit, setEdit] = useState({});
+  const [noteForm, setNoteForm] = useState({id: null, title: '', body: '', type: '', callback: null});
   
   const addNote = (note) => {
     note.id = Date.now();
@@ -23,12 +21,14 @@ const App = () => {
   
   const editNote = (id) => {
     const currentNote = notes.filter(note => note.id === id)[0];
-    setEdit({
+    setNoteForm({
+      id: currentNote.id,
       title: currentNote.title,
       body: currentNote.body,
-      id,
-      edit: true
+      type: 'edit',
+      callback: confirmEdit
     });
+    setModal(true);
   }
   
   const confirmEdit = (editedNote) => {
@@ -42,31 +42,27 @@ const App = () => {
     });
     
     setNotes(editNotes);
-    setEdit({});
-  }
-  
-  const setEditModal = (edit) => {
-    setEdit({...edit, edit: edit});
+    setNoteForm({id: null, title: '', body: '', type: '', callback: null});
   }
   
   return (
     <div className="App">
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <MyButton onClick={setModal} style={{marginTop: 50}}>
+        <MyButton onClick={() => {
+          setNoteForm({...noteForm, type: 'add', callback: addNote})
+          setModal(true);
+        }}
+        style={{marginTop: 50}}
+        >
           + Add Note
         </MyButton>
       </div>
       {modal &&
         <Modal setVisible={setModal}>
           <NoteForm
-            create={addNote}
+            noteForm={noteForm}
             setVisible={setModal}
           />
-        </Modal>
-      }
-      {edit.edit &&
-        <Modal setVisible={setEditModal}>
-          <EditNoteForm note={edit} editNote={editNote} confirm={confirmEdit}/>
         </Modal>
       }
       <Notes

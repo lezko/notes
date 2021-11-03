@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import classes from './NoteForm.module.css';
 import MyInput from "../UI/input/MyInput";
 import MyButton from "../UI/button/MyButton";
 import MyTextarea from "../UI/textarea/MyTextarea";
 
-const NoteForm = ({create, setVisible, ...props}) => {
-  const [note, setNote] = useState({title: '', body: ''});
+const NoteForm = ({setVisible, noteForm}) => {
+  const [note, setNote] = useState({id: noteForm.id, title: noteForm.title, body: noteForm.body});
   
   const closeForm = event => {
     if (
@@ -14,10 +14,7 @@ const NoteForm = ({create, setVisible, ...props}) => {
       note.title &&
       note.body
     ) {
-      create(note);
-      setVisible(false);
-    }
-    if (event.key === 'Escape') {
+      noteForm.callback(note);
       setVisible(false);
     }
   }
@@ -43,12 +40,12 @@ const NoteForm = ({create, setVisible, ...props}) => {
       <MyButton onClick={(event) => {
         event.preventDefault();
         if (note.title && note.body) {
-          create(note);
+          noteForm.callback(note);
           setVisible(false);
         }
       }
       }>
-        + Add
+        {noteForm.type === 'add' ? '+ Add' : 'Confirm edit'}
       </MyButton>
       <div style={{alignSelf: 'center', opacity: 0.3}}>or press [ctrl+enter]</div>
     </form>
