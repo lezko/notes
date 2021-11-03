@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+html, body, #root {
+    height: 100vh;
+    width: 100vw;
+}
+#root {
+    background: linear-gradient(to bottom left, #000000, #5d5454);
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow: scroll;
+}
+.App {
+
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+}
+
+@media (min-width: 768px) {
+    
+}

@@ -1,0 +1,9 @@
+.noteForm {
+    display: inline-block;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.noteForm > * {
+    margin-top: 10px;
+}

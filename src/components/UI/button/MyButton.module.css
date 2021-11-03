@@ -1,0 +1,14 @@
+.myBtn {
+    display: inline-block;
+    background: transparent;
+    padding: 5px 15px;
+    border: 1px solid white;
+    border-radius: 16px;
+    cursor: pointer;
+    align-self: center;
+    transition: 0.2s;
+}
+.myBtn:hover {
+    background: white;
+    color: black;
+}
